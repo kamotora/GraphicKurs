@@ -21,7 +21,18 @@ function init() {
     HALF_SIZE  = SIZE / 2;
     renderer = new THREE.CanvasRenderer();
     renderer.setSize(width, height);
+
     document.body.appendChild(renderer.domElement);
+
+    var instruction = document.getElementById('instructions');
+    instruction.innerHTML =
+        '        \'1\' \'2\'  для смены визуализации <br>\n' +
+        '        \'SPACE\' старт/стоп музыка <br>\n' +
+        '        \'C\' - показать/скрыть настройки <br>\n'+
+        '         \'вверх\'/\'вниз\' для управления дистанцией <br>\n'+
+        '         \'K\'  - скрыть это <br>\n';
+
+
 
     camera = new THREE.PerspectiveCamera(fov, width / height, 0.1, 3000);
     // camera.position.set(0, -450, 700);
@@ -58,7 +69,7 @@ function init() {
     }
 
     camera.position.y = settings.cameraY - 450;
-    camera.position.z = settings.cameraZ + 700; t
+    camera.position.z = settings.cameraZ + 700;
 
     particlesLines1 = new Array();
 

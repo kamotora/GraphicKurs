@@ -16,6 +16,16 @@ var camera, scene, renderer, controls, graphics;
 function init() {
     FFT_SIZE = analyser.fftSize;
     var container = document.createElement('div');
+    var instruction = document.getElementById('instructions');
+    instruction.innerHTML =
+        '        \'1\' \'2\' \'3\'  для смены визуализации <br>\n' +
+        '        \'R\' \'G\' \'B\' для смены оттенка <br>\n' +
+        '        \'A\' для управления анимацией <br>\n' +
+        '        \'SPACE\' старт/стоп музыка <br>\n' +
+        '        \'C\' - показать/скрыть настройки <br>\n'+
+        '         стрелки/мышь для управления камерой <br>\n'+
+        '         \'ENTER\' - вернуть камеру в первоначальное положение <br>\n'+
+        '         \'K\'  - скрыть это <br>\n';
     document.body.appendChild(container);
     scene = new THREE.Scene();
     var width = window.innerWidth;
@@ -79,6 +89,7 @@ function init() {
                     app.play = true;
                 }
                 break;
+
             case 38:
                 spiral.fov -= 1;
                 break;
@@ -129,6 +140,15 @@ function init() {
             case 65:
                 spiral.animate = !spiral.animate;
                 break;
+            case 75:
+                if(!spiral.inst){
+                    $('#instructions').css('visibility','visible');
+                    spiral.inst = !spiral.inst;
+                }
+                else {
+                    $('#instructions').css('visibility','hidden');
+                    spiral.inst = !spiral.inst;
+                }
             case 187:
                 if (spiral.intensity < 1){
                     spiral.intensity += 0.01;
@@ -191,6 +211,7 @@ var GuiControls = function(){
     this.flower = false;
     this.circle = false;
     this.animate = true;
+    this.inst = true;
 };
 
 var spiral = new GuiControls();
@@ -339,7 +360,7 @@ function animateParticles(){
             particle.position.y = (timeFloatData[j] * timeFrequencyData[j] * spiral.intensity);
             particle.position.z = Math.cos(j) * (j / (j/spiral.radius));
             camera.fov = 35;
-            //camera.position.y = 100;
+            camera.position.y = 100;
         }
     }
      if (!app.play){
